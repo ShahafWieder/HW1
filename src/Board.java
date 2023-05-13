@@ -21,9 +21,9 @@ public class Board {
             }
         }
     }
-public int getRows() {
- return tiles.length;
-}
+    public int getRows() {
+     return tiles.length;
+    }
     public int getColumns() {
         return tiles[0].length;
     }

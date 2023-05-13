@@ -11,25 +11,52 @@ public class State {
     }
 
     public boolean isGoal() {
-        // Board target=new Board()
         int counter = 1;
-        int rows= board.getRows();
-        int columns=board.getColumns();
+        int rows = board.getRows();
+        int columns = board.getColumns();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if(i!=rows & j!=columns) {//כשלא באחרון
-                    if (board.getTileValue(i, j) == counter) {
-                        counter++;
+                if (board.getTileValue(i, j) != counter) {
+                    if (i == rows - 1 && j == columns - 1 && board.getTileValue(i, j) == 0) {
+                        // We're at the last tile and it's empty, so it's still a valid goal state
+                        return true;
+                    } else {ז
+                        // There's a tile out of place, so it's not a goal state
+                        return false;
                     }
-                    else{return false;}
                 }
-                if(board.getTileValue(rows,columns)==0){return  true;}
-                else {
-                    return false;
-                }
+                counter++;
             }
         }
         return true;
+    }
+    public EnumDirection.Direction[] actions(){
+        int i_empty = -1;
+        int j_empty = -1;
+
+        for(int i=0;i<board.getRows();i++){
+            for (int j=0;j<board.getColumns();j++){
+                if (board.getTileValue(i,j)==0){
+                    i_empty = i;
+                    j_empty = j;
+                }
+            }
+        }
+
+        EnumDirection.Direction[] actions = { EnumDirection.Direction.UP, EnumDirection.Direction.DOWN, EnumDirection.Direction.RIGHT, EnumDirection.Direction.LEFT };
+        if (j_empty < 0) {
+            actions[3] = null;
+        }
+        if (j_empty > board.getColumns()-1) {
+            actions[2] = null;
+        }
+        if (i_empty < 0) {
+            actions[0] = null;
+        }
+        if(i_empty > board.getRows()-1) {
+            actions[1] = null;
+        }
+        return actions;
     }
 
     @Override
