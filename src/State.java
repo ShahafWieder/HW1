@@ -1,9 +1,9 @@
+import java.lang.module.ModuleFinder;
+
 public class State {
     private Board board;
-    private Action action;
-    private EnumDirection enumDirection;
-
-    public State(Board b, Action a, EnumDirection ed) {
+    //private EnumDirection Direction;
+    public State(Board b) {
         this.board = b;
        // this.Direction = ed;
     }
@@ -28,33 +28,36 @@ public class State {
         }
         return true;
     }
-    public EnumDirection.Direction[] actions(){
-        int i_empty = -1;
-        int j_empty = -1;
+    public Action[] actions() {
+        int [] defaultDirection = {0,0,0,0};
+        int counter = 0;
+        int [] zeroLocation = this.board.getTileLocation(0);
+        if(zeroLocation[1] +1 <= 0){ // up
+            defaultDirection[0] = 1;
+            counter ++;
+        }
+        if(zeroLocation[1]-1 >= this.board.getColumns()){ // down
+            defaultDirection[1] = 1;
+            counter++;
+        }
+        if(zeroLocation[0]+1 <= this.board.getRows()){ // right
+            defaultDirection[2] = 1;
+            counter++;
+        }
+        if(zeroLocation[0]-1 >= 0) { // left
+            defaultDirection[3] = 1;
+            counter++;
+        }
+        Action [] actionOptions = new Action[counter];
+        Direction [] temp = {Direction.UP, Direction.DOWN, Direction.RIGHT, Direction.LEFT};
+        int[]dRow={1,-1,0,0};
+        int[]dCol={0,0,-1,1};
+        for(int i = 0; i < 4; i++){
+            if(defaultDirection[i] == 0) continue;
+            actionOptions[i] = new Action(this.board.getTile(zeroLocation[0]+dRow[i],zeroLocation[1]+dCol[i]), temp[i]);
+        }
+        return actionOptions;
 
-        for(int i=0;i<board.getRows();i++){
-            for (int j=0;j<board.getColumns();j++){
-                if (board.getTileValue(i,j)==0){
-                    i_empty = i;
-                    j_empty = j;
-                }
-            }
-        }
-
-        EnumDirection.Direction[] actions = { EnumDirection.Direction.UP, EnumDirection.Direction.DOWN, EnumDirection.Direction.RIGHT, EnumDirection.Direction.LEFT };
-        if (j_empty < 0) {
-            actions[3] = null;
-        }
-        if (j_empty > board.getColumns()-1) {
-            actions[2] = null;
-        }
-        if (i_empty < 0) {
-            actions[0] = null;
-        }
-        if(i_empty > board.getRows()-1) {
-            actions[1] = null;
-        }
-        return actions;
     }
     Board newBoard = new Board(this.board.getstring());
     public State result(Action a){
