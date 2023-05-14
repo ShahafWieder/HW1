@@ -1,10 +1,9 @@
 public class Action {
 private  Board board;
 private Tile tile;
-private EnumDirection direction;
-public Action(Tile t,Board b,EnumDirection ed){
+private Direction direction;
+public Action(Tile t,Direction ed){
    this.tile=t;
-   this.board=b;
    this.direction=ed;
 }
 public String toString(){

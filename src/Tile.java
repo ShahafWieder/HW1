@@ -1,5 +1,5 @@
 public class Tile {
-private int value;
+private final int value;
 public  Tile (int value){
     this.value=value;
 }

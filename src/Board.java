@@ -30,11 +30,30 @@ public class Board {
     public int getTileValue(int i, int j) {
         return tiles[i][j].getValue();
     }
+    public Tile getTile(int i, int j) {
+        return tiles[i][j];
+    }
+    public String getstring(){
+        return this.board;
+    }
 
+    public int[] getTileLocation(int value) {
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j].getValue() == value) {
+                    return new int[] {i, j};
+                }
+            }
+        }
+        // tile not found
+        return null;
+    }
+    public void switchTiles(int row1, int col1, int row2, int col2) {
+        Tile temp = this.tiles[row1][col1];
+        this.tiles[row1][col1] = this.tiles[row2][col2];
+        this.tiles[row2][col2] = temp;
+    }
 
-    //  public String[][] getTiles() {
-      //  return this.tiles;
-    //}
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof Board)) {
