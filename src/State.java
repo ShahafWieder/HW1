@@ -63,7 +63,7 @@ public class State {
     }
     //Board newBoard = new Board(this.board.getstring());
     public State result(Action a){
-       // Board newBoard = new Board(this.board.getstring());
+        Board newBoard = new Board(this.board.getstring());
         newBoard = moveTile(this.board,a.tileValue());
         State newState = new State(newBoard);
         return newState;
