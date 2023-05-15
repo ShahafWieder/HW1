@@ -3,20 +3,25 @@ public class Board {
     private  Tile [][] tiles;
     private  String board;
     public Board(String boardString) {
-        this.board=boardString;
+        this.board = boardString;
         String[] rows = board.split("\\|");
-        tiles = new Tile[rows.length][];
+        int numRows = rows.length;
 
-        for (int i = 0; i < rows.length; i++) {
-            String[] columns = rows[i].trim().split(" ");
-            tiles[i] = new Tile[columns.length];
-            for (int j = 0; j< columns.length; j++){
-                if (columns[j].equals("_")){
-                    tiles[i][j] = new Tile(0);
-                }
-                else{
-                    int number = Integer.parseInt(columns[j]);
-                    tiles[i][j] = new Tile(number);
+        if (numRows > 0) {
+            String[] columns = rows[0].trim().split(" ");
+            int numCols = columns.length;
+
+            tiles = new Tile[numRows][numCols];
+
+            for (int i = 0; i < numRows; i++) {
+                columns = rows[i].trim().split(" ");
+                for (int j = 0; j < numCols; j++) {
+                    if (columns[j].equals("_")) {
+                        tiles[i][j] = new Tile(0);
+                    } else {
+                        int number = Integer.parseInt(columns[j]);
+                        tiles[i][j] = new Tile(number);
+                    }
                 }
             }
         }
@@ -31,7 +36,12 @@ public class Board {
         return tiles[i][j].getValue();
     }
     public Tile getTile(int i, int j) {
-        return tiles[i][j];
+        if (isValidTile(i, j)) {
+            return tiles[i][j];
+        } else {
+            // Handle the case when the indices are out of bounds
+            return tiles[0][0];
+        }
     }
     public String getstring(){
         return this.board;
@@ -52,6 +62,10 @@ public class Board {
         Tile temp = this.tiles[row1][col1];
         this.tiles[row1][col1] = this.tiles[row2][col2];
         this.tiles[row2][col2] = temp;
+    }
+
+    public boolean isValidTile(int row, int col) {
+        return row >= 0 && row < tiles.length && col >= 0 && col < tiles[row].length;
     }
 
     @Override
