@@ -1,18 +1,16 @@
 public class State {
     private Board board;
-    //private EnumDirection Direction;
     public State(Board b) {
         this.board = b;
-       // this.Direction = ed;
     }
 
     public boolean isGoal() {
         int counter = 1;
-        int rows = board.getRows();
-        int columns = board.getColumns();
+        int rows = this.board.getRows();
+        int columns = this.board.getColumns();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (board.getTileValue(i, j) != counter) {
+                if (this.board.getTileValue(i, j) != counter) {
                     if (i == rows - 1 && j == columns - 1 && board.getTileValue(i, j) == 0) {
                         // We're at the last tile, and it's empty, so it's still a valid goal state
                         return true;
@@ -32,19 +30,19 @@ public class State {
         int counter = 0;
         int [] zeroLocation = this.board.getTileLocation(0);
 
-        if(zeroLocation[1]-1 >= this.board.getColumns()){ // UP
+        if(zeroLocation[0]+1 < this.board.getRows()){ // UP
             defaultDirection[0] = 1;
             counter++;
         }
-        if(zeroLocation[1] +1 <= 0){ // DOWN
+        if(zeroLocation[0] -1 >= 0){ // DOWN
             defaultDirection[1] = 1;
             counter ++;
         }
-        if(zeroLocation[0]-1 >= 0) { // RIGHT
+        if(zeroLocation[1]-1 >= 0) { // RIGHT
             defaultDirection[2] = 1;
             counter++;
         }
-        if(zeroLocation[0]+1 <= this.board.getRows()){ // LEFT
+        if(zeroLocation[1]+1 < this.board.getColumns()){ // LEFT
             defaultDirection[3] = 1;
             counter++;
         }
@@ -60,7 +58,6 @@ public class State {
         return actionOptions;
 
     }
-    //Board newBoard = new Board(this.board.getstring());
     public State result(Action a){
         Board newBoard = new Board(this.board.getstring());
         newBoard = moveTile(this.board,a.tileValue());
@@ -72,7 +69,7 @@ public class State {
         int [] targetTilelocation = currentboard.getTileLocation(value);
         int [] emptyTilelocation = currentboard.getTileLocation(0);
 
-        if (board.isValidTile(targetTilelocation[0], targetTilelocation[1]) && board.isValidTile(emptyTilelocation[0], emptyTilelocation[1])){
+        if (this.board.isValidTile(targetTilelocation[0], targetTilelocation[1]) && this.board.isValidTile(emptyTilelocation[0], emptyTilelocation[1])){
             currentboard.switchTiles(targetTilelocation[0], targetTilelocation[1], emptyTilelocation[0], emptyTilelocation[1]); // switch tile locations
             return  currentboard;
         }
@@ -89,17 +86,17 @@ public class State {
 
     public int calculateHeuristicValue() {
         int heuristicValue = 0;
-        int size = board.getRows() * board.getColumns();
+        int size = this.board.getRows() * this.board.getColumns();
 
         // Iterate through each tile on the board
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                int tile = board.getTileValue(row, col);
+                int tile = this.board.getTileValue(row, col);
 
                 if (tile != 0) { // Skip the empty tile (assuming it's represented by 0)
                     // Calculate the expected row and column for the current tile value
-                    int expectedRow = (tile - 1) / size;
-                    int expectedCol = (tile - 1) % size;
+                    int expectedRow = (tile - 1) / this.board.getColumns();
+                    int expectedCol = (tile - 1) % this.board.getColumns();
 
                     // Add the absolute difference between the current position and the expected position
                     heuristicValue += calculateAbsoluteDifference(row, expectedRow)
@@ -110,6 +107,7 @@ public class State {
 
         return heuristicValue;
     }
+
 
 
     @Override

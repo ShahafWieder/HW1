@@ -27,7 +27,7 @@ public class Node {
 
         for (int i = 0; i < possibleActions.length; i++) {
             Action currentAction = possibleActions[i];
-            State nextState = state.result(currentAction);
+        State nextState = state.result(currentAction);
             expandedNodes[i] = new Node(nextState, this, currentAction);
         }
 
