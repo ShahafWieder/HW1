@@ -27,10 +27,10 @@ public class Board {
         }
     }
     public int getRows() {
-     return tiles.length;
+     return tiles.length;//maybe add -1
     }
     public int getColumns() {
-        return tiles[0].length;
+        return tiles[0].length; //maybe add -1
     }
     public int getTileValue(int i, int j) {
         return tiles[i][j].getValue();
@@ -65,7 +65,7 @@ public class Board {
     }
 
     public boolean isValidTile(int row, int col) {
-        return row >= 0 && row < tiles.length && col >= 0 && col < tiles[row].length;
+        return row >= 0 && row < tiles.length && col >= 0 && col < tiles[row].length; //maybe add -1 when .length
     }
 
     @Override

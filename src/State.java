@@ -1,5 +1,3 @@
-import java.lang.module.ModuleFinder;
-
 public class State {
     private Board board;
     //private EnumDirection Direction;
@@ -33,6 +31,7 @@ public class State {
         int [] defaultDirection = {0,0,0,0};
         int counter = 0;
         int [] zeroLocation = this.board.getTileLocation(0);
+
         if(zeroLocation[1]-1 >= this.board.getColumns()){ // UP
             defaultDirection[0] = 1;
             counter++;
@@ -82,6 +81,11 @@ public class State {
         }
     }
 
+    public int calculateAbsoluteDifference(int a, int b) {
+        int diff = a - b;
+        return diff >= 0 ? diff : -diff;
+    }
+
 
     public int calculateHeuristicValue() {
         int heuristicValue = 0;
@@ -97,14 +101,16 @@ public class State {
                     int expectedRow = (tile - 1) / size;
                     int expectedCol = (tile - 1) % size;
 
-                    // Add the Manhattan distance between the current position and the expected position
-                    heuristicValue += Math.abs(row - expectedRow) + Math.abs(col - expectedCol);
+                    // Add the absolute difference between the current position and the expected position
+                    heuristicValue += calculateAbsoluteDifference(row, expectedRow)
+                            + calculateAbsoluteDifference(col, expectedCol);
                 }
             }
         }
 
         return heuristicValue;
     }
+
 
     @Override
     public boolean equals(Object other) {
