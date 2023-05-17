@@ -44,7 +44,7 @@ public class Board {
      *              Example: tiles[0][0] represents the top-left tile.
      *                       tiles[2][1] represents the tile in the third row and second column.
      */
-    public  Board(Tile[][]tiles){//second constructor
+    public  Board(Tile[][]tiles){
         this.tiles=tiles;
     }
 
