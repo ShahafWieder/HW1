@@ -2,6 +2,8 @@ import java.util.Arrays;
 public class Board {
     private  Tile [][] tiles;
     private  String board;
+    private int rows;
+    private int columns;
     public Board(String boardString) {
         this.board = boardString;
         String[] rows = board.split("\\|");
@@ -9,6 +11,7 @@ public class Board {
         if (numRows > 0) {
             String[] columns = rows[0].trim().split(" ");
             int numCols = columns.length;
+
 
             tiles = new Tile[numRows][numCols];
 
@@ -24,6 +27,24 @@ public class Board {
                 }
             }
         }
+    }
+
+
+
+    public  Board(Tile[][]tiles){//second constructor
+        this.tiles=tiles;
+        this.rows=tiles.length;
+        this.columns=tiles[0].length;
+    }
+    public  Tile[][] copyBoard(){
+        int rows=this.getRows(),columns=this.getColumns();
+        Tile[][] temp=new Tile[rows][columns];
+        for (int i=0;i<rows;i++){
+            for (int j=0;j<columns;j++){
+                temp[i][j]=new Tile(this.getTileValue(i,j));
+            }
+        }
+        return temp;
     }
     public int getRows() {
      return tiles.length;//maybe add -1
