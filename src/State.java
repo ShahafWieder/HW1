@@ -56,11 +56,10 @@ public class State {
             size ++;
         }
         return actionOptions;
-
     }
     public State result(Action a){
-        Board newBoard = new Board(this.board.getstring());
-        newBoard = moveTile(this.board,a.tileValue());
+        Board newBoard = new Board(this.board.copyBoard());
+        newBoard = moveTile(newBoard,a.tileValue());
         State newState = new State(newBoard);
         return newState;
     }
@@ -68,14 +67,15 @@ public class State {
     public Board moveTile(Board currentboard,int value){
         int [] targetTilelocation = currentboard.getTileLocation(value);
         int [] emptyTilelocation = currentboard.getTileLocation(0);
+        currentboard.switchTiles(targetTilelocation[0], targetTilelocation[1], emptyTilelocation[0], emptyTilelocation[1]);
+        //Print the new board
+        //for(int i=0; i < currentboard.getRows();i++ ){
+          //  for(int j=0; j < currentboard.getColumns(); j++){
+               // System.out.print(currentboard.getTileValue(i,j));
+           // }
+      //  }
 
-        if (this.board.isValidTile(targetTilelocation[0], targetTilelocation[1]) && this.board.isValidTile(emptyTilelocation[0], emptyTilelocation[1])){
-            currentboard.switchTiles(targetTilelocation[0], targetTilelocation[1], emptyTilelocation[0], emptyTilelocation[1]); // switch tile locations
-            return  currentboard;
-        }
-        else {
-            return currentboard;
-        }
+        return  currentboard;
     }
 
     public int calculateAbsoluteDifference(int a, int b) {
@@ -89,8 +89,8 @@ public class State {
         int size = this.board.getRows() * this.board.getColumns();
 
         // Iterate through each tile on the board
-        for (int row = 0; row < size; row++) {
-            for (int col = 0; col < size; col++) {
+        for (int row = 0; row < board.getRows(); row++) {
+            for (int col = 0; col < board.getColumns(); col++) {
                 int tile = this.board.getTileValue(row, col);
 
                 if (tile != 0) { // Skip the empty tile (assuming it's represented by 0)

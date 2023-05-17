@@ -27,14 +27,12 @@ public class Node {
 
         for (int i = 0; i < possibleActions.length; i++) {
             Action currentAction = possibleActions[i];
-        State nextState = state.result(currentAction);
+            State nextState = this.state.result(currentAction);
             expandedNodes[i] = new Node(nextState, this, currentAction);
         }
-
         return expandedNodes;
     }
     public int heuristicValue() {
-        // Calculate and return the heuristic value of the state
         return state.calculateHeuristicValue();
     }
 

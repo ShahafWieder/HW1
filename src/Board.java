@@ -6,7 +6,6 @@ public class Board {
         this.board = boardString;
         String[] rows = board.split("\\|");
         int numRows = rows.length;
-
         if (numRows > 0) {
             String[] columns = rows[0].trim().split(" ");
             int numCols = columns.length;
