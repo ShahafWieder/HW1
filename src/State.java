@@ -4,6 +4,11 @@ public class State {
         this.board = b;
     }
 
+    /**
+     * Checks if the current state is a goal state.
+     *
+     * @Return `true` if the current state is a goal state, `false` otherwise
+     */
     public boolean isGoal() {
         int counter = 1;
         int rows = this.board.getRows();
@@ -11,19 +16,21 @@ public class State {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (this.board.getTileValue(i, j) != counter) {
-                    if (i == rows - 1 && j == columns - 1 && board.getTileValue(i, j) == 0) {
-                        // We're at the last tile, and it's empty, so it's still a valid goal state
-                        return true;
-                    } else {
-                        // There's a tile out of place, so it's not a goal state
-                        return false;
-                    }
+                    // We're at the last tile, and it's empty, so it's still a valid goal state
+                    // There's a tile out of place, so it's not a goal state
+                    return i == rows - 1 && j == columns - 1 && board.getTileValue(i, j) == 0;
                 }
                 counter++;
             }
         }
         return true;
     }
+
+    /**
+     * Generates an array of available actions in the current state.
+     *
+     * @Return An array of available actions
+     */
     public Action[] actions() {
         int size = 0;
         int [] defaultDirection = {0,0,0,0};
@@ -57,36 +64,55 @@ public class State {
         }
         return actionOptions;
     }
+
+    /**
+     * Generates the next state by applying the specified action.
+     *
+     * @param a The action to apply
+     * @Return The resulting state after applying the action
+     */
     public State result(Action a){
         Board newBoard = new Board(this.board.copyBoard());
         newBoard = moveTile(newBoard,a.tileValue());
-        State newState = new State(newBoard);
-        return newState;
+        return new State(newBoard);
     }
 
+    /**
+     * Moves the specified tile to the empty tile's location on the board.
+     *
+     * @param currentboard The current board state
+     * @param value        The value of the tile to be moved
+     * @Return The updated board state after moving the tile
+     */
     public Board moveTile(Board currentboard,int value){
         int [] targetTilelocation = currentboard.getTileLocation(value);
         int [] emptyTilelocation = currentboard.getTileLocation(0);
         currentboard.switchTiles(targetTilelocation[0], targetTilelocation[1], emptyTilelocation[0], emptyTilelocation[1]);
-        //Print the new board
-        //for(int i=0; i < currentboard.getRows();i++ ){
-          //  for(int j=0; j < currentboard.getColumns(); j++){
-               // System.out.print(currentboard.getTileValue(i,j));
-           // }
-      //  }
-
         return  currentboard;
     }
 
+    /**
+     * Calculates the absolute difference between two integers.
+     *
+     * @param a The first integer
+     * @param b The second integer
+     * @Return The absolute difference between the two integers
+     */
     public int calculateAbsoluteDifference(int a, int b) {
         int diff = a - b;
         return diff >= 0 ? diff : -diff;
     }
 
 
+    /**
+     * Calculates the heuristic value for the current state.
+     * The heuristic value represents the estimated cost from the current state to the goal state.
+     * It is based on the sum of the Manhattan distances between each tile's current position and its expected position in the goal state.
+     *
+     * @Return The heuristic value for the current state
+     */
     public int calculateHeuristicValue() {
         int heuristicValue = 0;
-        int size = this.board.getRows() * this.board.getColumns();
 
         // Iterate through each tile on the board
         for (int row = 0; row < board.getRows(); row++) {

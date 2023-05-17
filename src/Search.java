@@ -16,7 +16,7 @@ public class Search {
      * Constructs the root node of the game based on an initial board.
      *
      * @param boardString String representing the initial board
-     * @return The root node used to search for a solution
+     * @Return The root node used to search for a solution
      */
     private Node getRoot(String boardString) {
         Board board = new Board(boardString);
@@ -25,9 +25,8 @@ public class Search {
         State initialState = new State(board);
 
         // Create the initial vertex with no parent and no action
-        Node root = new Node(initialState, null, null);
 
-        return root;
+        return new Node(initialState, null, null);
     }
 
     /**
@@ -73,7 +72,7 @@ public class Search {
      * Extracts a solution from a given node by iterating backward from the node up to the root.
      * The given node satisfies node.getState().isGoal() == true.
      *
-     * @param node Node contains a the goal state
+     * @param node Node contains the goal state
      * @return List of actions to reach the goal state
      */
     private List<Action> extractSolution(Node node) {

@@ -3,10 +3,16 @@ private final int value;
 public  Tile (int value){
     this.value=value;
 }
-public int getValue()
-{
-    return this.value;
-}
+
+    /**
+     * Retrieves the value of the tile.
+     *
+     * @Return The value of the tile
+     */
+    public int getValue(){
+        return this.value;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof Tile)) {
