@@ -30,6 +30,6 @@ private Direction direction;
      * @Return A string representing the action
      */
     public String toString(){
-        return "Move" + tile.getValue() + direction;
+        return "Move " + (tile.getValue() +" "+ direction).toLowerCase();
         }
     }
