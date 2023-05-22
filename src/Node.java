@@ -1,3 +1,6 @@
+/**
+ * Represents a node in a search algorithm, containing a state, parent node, and action.
+ */
 public class Node {
     private State state;
     private Node parent;

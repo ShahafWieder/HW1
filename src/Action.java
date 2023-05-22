@@ -1,3 +1,6 @@
+/**
+ * Represents an action in a game, involving a tile and direction.
+ */
 public class Action {
 
 private Tile tile;

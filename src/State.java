@@ -1,3 +1,6 @@
+/**
+ * Represents a state in a search algorithm, containing a board configuration.
+ */
 public class State {
     private Board board;
     public State(Board b) {

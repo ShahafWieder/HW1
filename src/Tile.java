@@ -1,3 +1,6 @@
+/**
+ * Represents a tile in a puzzle, containing a value
+ */
 public class Tile {
 private final int value;
 public  Tile (int value){
